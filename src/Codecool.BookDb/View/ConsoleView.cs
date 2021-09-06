@@ -58,9 +58,20 @@ namespace Codecool.BookDb.View
 
         public Author SelectAuthor(List<Author> authors, Author defaultAuthor)
         {
-            ListAuthors(authors, false);
-            int selectedId = userInterface.ReadInt("Select author id", defaultAuthor.Id);
-            return authors.Find(author => author.Id == selectedId);
+            Author selectedAuthor;
+            do
+            {
+                ListAuthors(authors, false);
+                int selectedId = userInterface.ReadInt("Select author id", defaultAuthor.Id);
+                selectedAuthor = authors.Find(author => author.Id == selectedId);
+                if (selectedAuthor != null)
+                {
+                    break;
+                }
+                userInterface.PrintLn($"Author not found with id: {selectedId}");
+            } while (true);
+
+            return selectedAuthor;
         }
 
         public Author EditAuthor(Author author)
@@ -96,9 +107,20 @@ namespace Codecool.BookDb.View
 
         public Book SelectBook(List<Book> books)
         {
-            ListBooks(books, false);
-            int selectedId = userInterface.ReadInt("Select book id", 1);
-            return books.Find(book => book.Id == selectedId);
+            Book selectedBook;
+            do
+            {
+                ListBooks(books, false);
+                int selectedId = userInterface.ReadInt("Select book id", 1);
+                selectedBook = books.Find(book => book.Id == selectedId);
+                if (selectedBook != null)
+                {
+                    break;
+                }
+                userInterface.PrintLn($"Book not found with id: {selectedId}");
+            } while (true);
+
+            return selectedBook;
         }
 
         public Book EditBook(Book book, List<Author> authors)

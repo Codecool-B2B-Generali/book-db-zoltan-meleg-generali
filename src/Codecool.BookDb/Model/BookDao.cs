@@ -35,7 +35,7 @@ namespace Codecool.BookDb.Model
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-                using (SqlCommand command = new SqlCommand("SELECT * FROM book where id={id}", con))
+                using (SqlCommand command = new SqlCommand("SELECT * FROM book where id=@ID", con))
                 {
                     command.Parameters.AddWithValue("@ID", id);
                     using (SqlDataReader reader = command.ExecuteReader())
