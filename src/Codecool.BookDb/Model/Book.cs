@@ -6,6 +6,10 @@ namespace Codecool.BookDb.Model
         public Author Author { get; set; }
         public string Title { get; set; }
 
+        public Book()
+        {
+        }
+
         public Book(Author author, string title)
         {
             Author = author;

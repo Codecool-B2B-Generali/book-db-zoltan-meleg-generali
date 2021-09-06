@@ -9,6 +9,10 @@ namespace Codecool.BookDb.Model
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
 
+        public Author()
+        {
+        }
+
         public Author(string firstName, string lastName, DateTime birthDate)
         {
             FirstName = firstName;

@@ -1,4 +1,4 @@
-using System;
+using Codecool.BookDb.Controller;
 
 namespace Codecool.BookDb
 {
@@ -6,7 +6,7 @@ namespace Codecool.BookDb
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            BookController bookController = new BookController();
         }
     }
 }
