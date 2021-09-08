@@ -56,13 +56,13 @@ namespace Codecool.BookDb.View
             return new Author(firstName, lastName, birthDate);
         }
 
-        public Author SelectAuthor(List<Author> authors, Author defaultAuthor)
+        public Author SelectAuthor(List<Author> authors, int defaultIndex)
         {
             Author selectedAuthor;
             do
             {
                 ListAuthors(authors, false);
-                int selectedId = userInterface.ReadInt("Select author id", defaultAuthor.Id);
+                int selectedId = userInterface.ReadInt("Select author id", authors[defaultIndex].Id);
                 selectedAuthor = authors.Find(author => author.Id == selectedId);
                 if (selectedAuthor != null)
                 {
@@ -100,7 +100,7 @@ namespace Codecool.BookDb.View
 
         public Book AddBook(List<Author> authors)
         {
-            Author author = SelectAuthor(authors, authors[0]);
+            Author author = SelectAuthor(authors, 0);
             string title = userInterface.ReadString("Title?", "N/A");
             return new Book(author, title);
         }
@@ -125,7 +125,8 @@ namespace Codecool.BookDb.View
 
         public Book EditBook(Book book, List<Author> authors)
         {
-            Author author = SelectAuthor(authors, book.Author);
+            Author author = SelectAuthor(authors, authors.FindIndex(x => x.Id == book.Author.Id));
+
             string title = userInterface.ReadString("Title, if changed?", book.Title);
 
             Book editedBook = new Book(author, title);

@@ -10,9 +10,6 @@ namespace Codecool.BookDb.Controller
         private AuthorDao authorDao;
         private BookDao bookDao;
 
-        private List<Author> authors;
-        private List<Book> books;
-
         private ConsoleView consoleView;
 
         public BookController()
@@ -21,9 +18,6 @@ namespace Codecool.BookDb.Controller
             authorDao = new AuthorDao(BookDbManager.Connect());
 
             consoleView = new ConsoleView();
-
-            authors = authorDao.GetAll();
-            books = bookDao.GetAll();
 
             Menu();
         }
@@ -48,7 +42,6 @@ namespace Codecool.BookDb.Controller
 
         private void WorkWithAuthors()
         {
-            authors = authorDao.GetAll();
             char choice;
             do
             {
@@ -56,7 +49,7 @@ namespace Codecool.BookDb.Controller
                 switch (choice)
                 {
                     case 'l':
-                        consoleView.ListAuthors(authors);
+                        consoleView.ListAuthors(authorDao.GetAll());
                         break;
                     case 'a':
                         AddAuthor();
@@ -72,22 +65,17 @@ namespace Codecool.BookDb.Controller
         {
             Author author = consoleView.AddAuthor();
             authorDao.Add(author);
-            authors.Clear();
-            authors = authorDao.GetAll();
         }
 
         private void EditAuthor()
         {
-            Author author = consoleView.SelectAuthor(authors, authors[0]);
+            Author author = consoleView.SelectAuthor(authorDao.GetAll(), 0);
             author = consoleView.EditAuthor(author);
             authorDao.Update(author);
-            authors.Clear();
-            authors = authorDao.GetAll();
         }
 
         private void WorkWithBooks()
         {
-            books = bookDao.GetAll();
             char choice;
             do
             {
@@ -95,7 +83,7 @@ namespace Codecool.BookDb.Controller
                 switch (choice)
                 {
                     case 'l':
-                        consoleView.ListBooks(books);
+                        consoleView.ListBooks(bookDao.GetAll());
                         break;
                     case 'a':
                         AddBook();
@@ -109,19 +97,15 @@ namespace Codecool.BookDb.Controller
 
         private void AddBook()
         {
-            Book book = consoleView.AddBook(authors);
+            Book book = consoleView.AddBook(authorDao.GetAll());
             bookDao.Add(book);
-            books.Clear();
-            books = bookDao.GetAll();
         }
 
         private void EditBook()
         {
-            Book book = consoleView.SelectBook(books);
-            book = consoleView.EditBook(book, authors);
+            Book book = consoleView.SelectBook(bookDao.GetAll());
+            book = consoleView.EditBook(book, authorDao.GetAll());
             bookDao.Update(book);
-            books.Clear();
-            books = bookDao.GetAll();
         }
     }
 }
